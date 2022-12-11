@@ -35,6 +35,8 @@ class ContactController extends Controller
 
     public function __construct(Request $request, ContactRepository $repository)
     {
+        $this->middleware('can:contact.view', ['index']);
+        
         $this->request = $request;
         $this->repository = $repository;
         $this->breadcrumb = [

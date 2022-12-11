@@ -8,5 +8,6 @@ return [
         'name' => 'contact::messages.contacts',
         'icon' => 'fas fa-headset',
         'url' => route('admin.contacts.index'),
+        'permissions' => ['contact.view']
     ]
 ];
