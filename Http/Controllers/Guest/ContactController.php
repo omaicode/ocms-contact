@@ -5,7 +5,11 @@ namespace Modules\Contact\Http\Controllers\Guest;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Modules\Contact\Emails\ContactMail;
 use Modules\Contact\Entities\Contact;
+use Throwable;
 
 class ContactController extends Controller
 {
@@ -23,6 +27,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->only(['name', 'email', 'subject', 'content']);
         $request->validate([
             'name'    => 'required|max:30',
             'email'   => 'required|email',
@@ -30,7 +35,16 @@ class ContactController extends Controller
             'content' => 'required|max:500'
         ]);
 
-        Contact::create($request->only(['name', 'email', 'subject', 'content']));
+        Contact::create($data);
+        
+        if(boolval(config('mail.enable', false))) {
+            try {
+                $recipient = config('appearance.theme.email');
+                Mail::to($recipient)->send(new ContactMail($data));
+            } catch (Throwable $e) {
+                Log::error($e);
+            }
+        }        
 
         return redirect()->back()->with('success', 'success');
     }
