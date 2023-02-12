@@ -3,7 +3,7 @@
 return [
     [
         'id' => 'ocms-menu-contact',
-        'priority' => 2,
+        'priority' => 95,
         'parent_id' => null,
         'name' => 'contact::messages.contacts',
         'icon' => 'fas fa-headset',
