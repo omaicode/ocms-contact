@@ -42,7 +42,9 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <input type="submit" value="Send Message" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary btn-lg btn-rounded px-4 py-2">
+                        Submit
+                    </button>
                     <div class="submitting"></div>
                 </div>
             </div>
