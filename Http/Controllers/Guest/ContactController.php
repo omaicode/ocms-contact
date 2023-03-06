@@ -39,6 +39,7 @@ class ContactController extends Controller
         
         if(boolval(config('mail.enable', false))) {
             try {
+                $data['subject'] = '[Consultation Request] '.$data['subject'];
                 $recipient = config('appearance.theme.email');
                 Mail::to($recipient)->send(new ContactMail($data));
             } catch (Throwable $e) {
